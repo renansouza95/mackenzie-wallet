@@ -180,7 +180,7 @@ src/
 │   ├── transacoes.service.ts       # Lógica de negócio e cálculo de métricas
 │   ├── transacoes.model.ts         # Schema e Interface
 │   ├── transacoes.module.ts        # Módulo
-│   ├── transacoes.service.spec.ts  # Testes unitários
+│   ├── transacoes.service.spec.ts
 │   └── transacoes.controller.spec.ts
 ├── app.controller.ts
 ├── app.service.ts
