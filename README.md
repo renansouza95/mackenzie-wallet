@@ -22,8 +22,8 @@ O schema define a estrutura para registrar receitas e despesas do usuário.
 |-------|------|-----------|-----------|
 | `descricao` | String | Descrição da transação (ex: "Conta de Luz", "Compra de Roupas") | Obrigatório |
 | `valor` | Number | Valor monetário da transação | Obrigatório, >= 0 |
-| `tipo` | String | Tipo da transação | Obrigatório, apenas "receita" ou "despesa" |
-| `categoria` | String | Categoria da transação | Obrigatório, aceita: "Moradia", "Alimentação", "Lazer", "Educação", "Saúde", "Transporte", "Outros" |
+| `tipo` | String | Tipo da transação | Obrigatório, aceita apenas "receita" ou "despesa" |
+| `categoria` | String | Categoria da transação | Obrigatório |
 | `consumoConsciente` | Boolean | Indica se a despesa foi essencial (true) ou por impulso (false) | Obrigatório |
 | `createdAt` | Date | Data de criação (automático) | Gerenciado pelo MongoDB |
 | `updatedAt` | Date | Data de atualização (automático) | Gerenciado pelo MongoDB |
@@ -64,7 +64,6 @@ Content-Type: application/json
 **Validações**:
 - `tipo` deve ser exatamente "receita" ou "despesa" (case-insensitive)
 - `valor` deve ser um número positivo
-- `categoria` deve ser uma das categorias pré-definidas
 
 **Exemplos de Uso**:
 
@@ -159,42 +158,6 @@ Content-Type: application/json
 }
 ```
 
-### Explicação das Métricas:
-
-| Métrica | Descrição | Cálculo |
-|---------|-----------|---------|
-| `saldoTotal` | Saldo final da conta | Soma das receitas - Soma das despesas |
-| `totalDespesas` | Total de todas as despesas | Soma de todas as transações com tipo "despesa" |
-| `totalGastoImpulso` | Total de gastos por impulso | Soma das despesas onde `consumoConsciente` = false |
-
-**Exemplo de Cálculo**:
-- Receitas: 3000
-- Despesas: 350 (200 consciente + 150 por impulso)
-- **saldoTotal**: 3000 - 350 = 2650
-- **totalDespesas**: 200 + 150 = 350
-- **totalGastoImpulso**: 150
-
-**Exemplo de Uso**:
-
-```bash
-curl http://localhost:3000/transacoes
-```
-
----
-
-## Executando a Aplicação
-
-### Desenvolvimento:
-```bash
-npm run start:dev
-```
-
-### Produção:
-```bash
-npm run build
-npm run start:prod
-```
-
 ---
 
 ## ODS 12 - Consumo e Produção Sustentáveis
@@ -205,20 +168,6 @@ O campo `consumoConsciente` apoia o **Objetivo de Desenvolvimento Sustentável (
 - **Consumo por Impulso**: Gastos desnecessários e impulsivos
 
 A métrica `totalGastoImpulso` ajuda o usuário a visualizar o peso dos gastos não essenciais e a tomar decisões mais sustentáveis.
-
----
-
-## Tratamento de Erros
-
-A API retorna mensagens de erro descritivas quando há validação:
-
-```json
-{
-  "statusCode": 400,
-  "message": "Bad Request",
-  "error": "Validation failed"
-}
-```
 
 ---
 
